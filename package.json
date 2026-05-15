@@ -1,0 +1,17 @@
+{
+  "name": "word-match-game",
+  "version": "1.0.0",
+  "description": "English-Spanish word matching game with adaptive difficulty",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev"
+  },
+  "keywords": ["game", "words", "matching", "english", "spanish"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^latest"
+  },
+  "dependencies": {}
+}

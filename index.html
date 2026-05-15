@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English-Spanish Word Matching Game</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #05050d;
+      color: #e4e7ff;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #gameContainer {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #04040c;
+      border-top: 1px solid rgba(0, 255, 255, 0.14);
+      box-shadow: inset 0 0 80px rgba(0, 255, 255, 0.08);
+    }
+
+    #gameCanvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: crosshair;
+    }
+
+    #ui {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      right: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #e4e7ff;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    #score, #level, #timer {
+      background: rgba(10, 10, 18, 0.8);
+      padding: 12px 22px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 255, 255, 0.16);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 18px rgba(0, 255, 255, 0.08);
+    }
+
+    #gameOver {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(4, 4, 16, 0.98);
+      padding: 40px;
+      border-radius: 18px;
+      text-align: center;
+      color: #e4e7ff;
+      display: none;
+      z-index: 100;
+      min-width: 300px;
+      border: 1px solid rgba(189, 111, 255, 0.4);
+      box-shadow: 0 0 30px rgba(189, 111, 255, 0.18);
+    }
+
+    #gameOver h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #ad7bff;
+    }
+
+    #gameOver p {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    #gameOver button {
+      margin-top: 20px;
+      padding: 12px 30px;
+      font-size: 16px;
+      background: linear-gradient(135deg, #24f7ff 0%, #c557ff 100%);
+      color: #04040c;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 20px rgba(36, 247, 255, 0.25);
+    }
+
+    #gameOver button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 28px rgba(36, 247, 255, 0.35);
+    }
+
+    #startScreen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at top, rgba(16, 148, 255, 0.12), transparent 25%),
+                  radial-gradient(circle at bottom right, rgba(255, 30, 219, 0.12), transparent 22%),
+                  #05050d;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #e4e7ff;
+      z-index: 50;
+    }
+
+    #startScreen h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 30px rgba(128, 111, 255, 0.18);
+    }
+
+    #startScreen p {
+      font-size: 20px;
+      margin-bottom: 30px;
+      color: #c7d0ff;
+      letter-spacing: 0.03em;
+    }
+
+    #startButton {
+      padding: 15px 40px;
+      font-size: 20px;
+      background: linear-gradient(135deg, #2bf5ff 0%, #d47bff 100%);
+      color: #05050c;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 20px rgba(43, 245, 255, 0.25);
+    }
+
+    #startButton:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 28px rgba(43, 245, 255, 0.35);
+    }
+
+    #startButton:active {
+      transform: scale(0.98);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <div id="startScreen">
+    <h1>🎮 Word Match Game</h1>
+    <p>Match English words with their Spanish translations</p>
+    <p>Click a word, then click its match!</p>
+    <button id="startButton">Start Game</button>
+  </div>
+
+  <div id="gameContainer" class="hidden">
+    <canvas id="gameCanvas"></canvas>
+    <div id="ui">
+      <div id="score">Score: 0</div>
+      <div id="level">Level: 1</div>
+      <div id="timer">Time: 0s</div>
+    </div>
+  </div>
+
+  <div id="gameOver">
+    <h1>Game Over!</h1>
+    <p id="finalScore">Final Score: 0</p>
+    <p id="finalLevel">Level Reached: 1</p>
+    <p id="finalTime">Time Played: 0s</p>
+    <button onclick="location.reload()">Play Again</button>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
